@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 
-export function useCanvas(render, size)
+export function useCanvas(size, draw, params)
 {
     const canvasRef = useRef()
 
@@ -13,8 +13,8 @@ export function useCanvas(render, size)
         canvas.width = width
         canvas.height = height
         
-        render(ctx)
-    }, [ render ])
+        draw(ctx, params)
+    }, [ draw, params ])
 
     return { canvasRef }
 }

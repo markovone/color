@@ -1,10 +1,9 @@
-import { useCanvas } from 'src/ui/Canvas/useCanvas'
+import { useCanvas } from './useCanvas'
 
-export function Canvas({ width, height })
+
+export function Canvas({ width, height, draw, params })
 {
-    const { canvasRef } = useCanvas((ctx) => {
-        ctx.fillRect(10,10,10,10)
-    }, { width, height })
+    const { canvasRef } = useCanvas({ width, height }, draw, params)
 
     return (
         <canvas ref={ canvasRef }></canvas>

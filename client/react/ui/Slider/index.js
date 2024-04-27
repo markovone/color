@@ -1,9 +1,5 @@
-import { useState } from 'react'
-
-export function Slider({ className, ...rest })
+export function Slider({ className, onChange, value, ...rest })
 {
-    const [ value, setValue ] = useState(rest.defaultValue || 0)
-
     return (
         <div className={ 'slider --vertical' +' '+ className } >
             <div 
@@ -16,9 +12,7 @@ export function Slider({ className, ...rest })
 
             <input 
                 type="range"
-                onChange={ (e) => {
-                    setValue(parseInt(e.target.value))
-                } }
+                onChange={ onChange }
                 defaultValue={ value }
                 { ...rest } 
             />
