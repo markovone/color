@@ -6,3 +6,98 @@
     width: 1000px;
     margin: auto;
 }
+
+.slider {
+
+    &.--vertical {
+        writing-mode: vertical-lr;
+        direction: rtl // because Opera
+    }   
+
+    [type="range"] {
+        width: 20px; height: 100%;
+        appearance: none;
+        background: transparent;
+    }
+
+    [type="range"]::-webkit-slider-thumb {
+        appearance: none;
+        height: 20px; width: 20px;
+        margin-left: -10px;
+        background-color: #000;
+    }
+
+    [type="range"]::-webkit-slider-runnable-track {
+        appearance: none;
+        width: 1px;
+        background: #000;
+    }
+
+    [type="range"]::-moz-range-track {
+        appearance: none;
+        width: 1px;
+        background: #000;
+    }
+
+    [type="range"]::-moz-range-thumb {
+        appearance: none;
+        height: 20px; width: 20px;
+        border: none;
+        border-radius: 0;
+        background: #000;
+
+    }
+}
+
+.slider-hue {
+    height: 360px;
+
+    .slider-thumb {
+        pointer-events: none;
+        position: absolute;
+        z-index: 3;
+        top: 0; left: 0;
+        width: 50px; height: 50px;
+        box-shadow: 4px -4px 0px 2px #fff;
+        transform: rotate(45deg);
+    }
+
+    [type="range"] {
+        position: absolute;
+        z-index: 2;
+        width: 100%;
+
+        &::-webkit-slider-thumb,
+        &::-webkit-slider-runnable-track {
+            visibility: hidden;
+        }
+
+        &::-moz-range-thumb,
+        &::-moz-range-track  {
+            visibility: hidden;
+        }
+    }
+
+    &::after {
+        content: '';
+        display: block;
+        width: 50px; height: 100%;
+        margin-left: 50px;  
+        background: linear-gradient(
+            rgb(255 0 0), 
+            rgb(255 125 0), 
+            rgb(255 255 0), 
+            rgb(125 255 0),
+            rgb(0 255 0),
+            rgb(0 255 125),
+            rgb(0 255 255), 
+            rgb(0 125 255), 
+            rgb(0 0 255), 
+            rgb(125 0 255),
+            rgb(255 0 255),
+            rgb(255 0 125),
+            rgb(255 0 0)
+        );
+    }
+
+}
