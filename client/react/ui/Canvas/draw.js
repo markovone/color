@@ -1,13 +1,26 @@
+import { color } from 'src/color'
+
 export function draw(ctx, params)
 {
-    const unit = 5
-    const [ h, s, l ] = [ params.hue, 0, 0 ]
+    const canavsSize = ctx.canvas.getBoundingClientRect()
 
-    for (let x = 0; x < 100; x++)
+    hueSlice(params.hue, canavsSize.width/100, params.colorModel, ctx)
+}
+
+
+function hueSlice(hue, unit, colorModel, ctx)
+{
+    const [ h, x, y ] = [ hue, 0, 0 ]
+
+    for (let i = 0; i < 100; i++)
     {
-        for (let y = 0; y < 100; y++) {
-            ctx.fillStyle = `hsl(${h} ${s+x}% ${l+y}%)`
-            ctx.fillRect( x*unit, y*unit, unit, unit)
+        for (let j = 0; j < 100; j++) 
+        {
+            const colorNorm = color([ h, x+i, y+j ]).normalize(colorModel)
+            const hsl = colorModel === 'hsv' ? colorNorm.convert('hsv2hsl') : colorNorm
+
+            ctx.fillStyle = hsl.format('hsl')
+            ctx.fillRect( i*unit, j*unit, unit, unit)
         }
     }
 }

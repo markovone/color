@@ -7,6 +7,54 @@
     margin: auto;
 }
 
+.picker {
+    display: grid;
+    grid-template-columns: 100px  max-content;
+    grid-template-rows: auto auto;
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    grid-auto-columns: min-content;
+
+
+    & :nth-child(1) {
+        grid-area: 1 / 2 / 2 / 2;
+        align-self:center
+    }
+
+    & :nth-child(2) {
+        grid-area: 2 / 1 / 2 / 3;
+        align-self:center
+    }
+
+    & :nth-child(3) {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+}
+
+.option-list {
+    gap: 1em    ;
+    border: none;
+
+    [type="radio"] {
+        display: none;
+
+        &[checked] + label {
+            background-color: #000;
+            font-weight: bold;
+            color: #fff;
+        }
+    }
+
+    label {
+        cursor: pointer;
+        display: block;
+        padding: 0.4em 0.6em;
+        border: 3px solid #000;
+        font-size: 20px;
+        color: #000;
+    }
+}
+
 .slider {
 
     &.--vertical {
@@ -50,14 +98,13 @@
 }
 
 .slider-hue {
-    height: 360px;
-    margin-right: 20px;
+    width: 100px; height: 360px;
 
     .slider-thumb {
         pointer-events: none;
         position: absolute;
         z-index: 3;
-        top: 0; left: 0;
+        top: 0; left: 10px;
         width: 50px; height: 50px;
         box-shadow: 4px -4px 0px 2px #fff;
         transform: rotate(45deg);
