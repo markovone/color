@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Canvas } from 'src/ui/Canvas'
 import { Slider } from 'src/ui/Slider'
-import { draw } from 'src/ui/Canvas/draw'
+import { drawHueSlice } from 'src/draw'
 import { OptionList } from './ui/OptionList'
 
 export function App()
@@ -32,13 +32,17 @@ export function App()
                 }}
             />
 
-            <Canvas 
-                width={ 500 } height={ 500 } 
-                params={{ 
-                    colorModel,
-                    hue: 359-hue 
-                }}
-                draw={ draw } />
+            <div className="hue-slice">
+
+                <Canvas 
+                    params={{ 
+                        colorModel,
+                        hue: 359-hue 
+                    }}
+                    draw={ drawHueSlice } />
+                    
+            </div>
+
  
         </div>
     )
