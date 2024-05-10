@@ -1,0 +1,140 @@
+.container {
+    width: 48em;
+    margin: 50px auto 0 auto;
+}
+
+.picker {
+    box-sizing: content-box;
+    gap: 25px;
+    width: 300px;
+    padding: 20px;
+    background-color: #000;
+
+
+
+    .color-area {
+        width: 100%; height: 300px;
+    }
+
+
+
+    .option-list {
+        gap: 0.5em;
+        border: none;
+    
+        [type="radio"] {
+            display: none;
+    
+            &[checked] + label {
+                border-radius: 4px;;
+                font-weight: bold;
+                color: #000;
+                background-color: #fff;
+            }
+        }
+    
+        label {
+            cursor: pointer;
+            display: block;
+            padding: 0.1em 0.5em;
+            border: none;
+            font-size: 0.8em;
+            color: #fff;
+            background-color: transparent;
+        }
+    }
+
+
+
+    .mode {
+        gap: 10px;
+    }
+    
+    
+    .color-info {
+        
+        input, select {
+            border: none;
+            font-size: 0.8rem;
+            color: #fff;
+            background-color: #000;
+        }
+
+
+
+    }
+    
+
+    .select {
+        padding: 0.2em 1.4em 0.2em 0.4em;       
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: url("../img/icons/arrow.svg") no-repeat right 0.4em center;
+        background-size: 8px;
+    
+        option {
+            color: #000;
+            background-color: #fff;
+        }
+    }
+
+    .slider {
+        gap: 15px;
+    
+        [type="range"] {
+            position: absolute;
+            top: 0; left: -3%;
+            width: 106%;
+            appearance: none;
+            outline:none;
+            background: transparent;
+            height: 100%;
+            border:none;
+            border-radius: 0px;
+        }
+        
+        [type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            display: block;
+            width: 5.5%; height: 20px;
+            margin-top: -10px;
+            background: url(
+                "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><polygon fill='black' stroke='none' points='18,4.2 9,15 0,4.2'/><polygon fill='white' stroke='none' class='st0' points='16.5,0 9,9 1.5,0' /></svg>"
+            ) no-repeat;
+        }
+    
+        [type="range"]::-moz-range-thumb {
+            appearance: none;
+            display: block;
+            width: 5.5%; height: 30px;
+            border: none;
+            border-radius: 0px;
+            margin-top: 0px;
+            background-color: #fff;
+            background: url(
+                "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><polygon fill='black' stroke='none' points='18,4.2 9,15 0,4.2'/><polygon fill='white' stroke='none' class='st0' points='16.5,0 9,9 1.5,0' /></svg>"
+            ) no-repeat;
+        }
+    }
+    
+    .slider-hue {
+        width: 100%; height: 20px;
+        background: linear-gradient(
+            to right,
+            rgb(255 0 0), 
+            rgb(255 125 0), 
+            rgb(255 255 0), 
+            rgb(125 255 0),
+            rgb(0 255 0),
+            rgb(0 255 125),
+            rgb(0 255 255), 
+            rgb(0 125 255), 
+            rgb(0 0 255), 
+            rgb(125 0 255),
+            rgb(255 0 255),
+            rgb(255 0 125),
+            rgb(255 0 0)
+        );
+    }
+}

@@ -1,56 +1,107 @@
 export function color(value)
 {
+    const data = parse(value)
+
     return {
-        value,
-        normalize: (colorModel) => color(normalize(value, colorModel)),
-        convert: (fromTo) => color(convert(value, fromTo)),
-        format: (colorModel = 'rgb') => format(value, colorModel)
+        data,
+        get colorModel() { return data.colorModel },
+        get isNormalized() { return data.isNormalized },
+        get channels() { return data.channels },
+        getChannel: (i) => data.channels[i],
+        change: (fn) => color(fn(data)),
+        convert: (fromTo) => color(convert(data, fromTo)),
+        format: (colorModel = 'rgb') => format(data, colorModel)
     }
 }
 
-function normalize(value, colorModel) 
+function parse(value)
+{
+    if (Array.isArray(value)) 
+    {
+        return {
+            channels: value,
+            isNormalized: false,
+            colorModel: 'rgb'
+        }
+    } 
+    else if (typeof value === 'object' && !Array.isArray(value) && value !== null) 
+    {
+        const { channels, colorModel, isNormalized } = value
+
+        return {
+            channels,
+            isNormalized,
+            colorModel
+        }
+    }
+    else if (typeof v === 'string')
+    {
+        // TODO
+    }
+}
+
+
+function normalize({ channels, colorModel }) 
 {
     switch (colorModel) {
         case 'rgb':
-            return value.map(item => item/255)
+            return channels.map(item => item/255)
         
         case 'hsl':
-            return [ value[0]/359, value[1]/100, value[2]/100 ]
+            return [ channels[0]/359, channels[1]/100, channels[2]/100 ]
 
         case 'hsv':
-            return [ value[0]/359, value[1]/100, value[2]/100 ]
+            return [ channels[0]/359, channels[1]/100, channels[2]/100 ]
     
         default:
-            return value
+            return channels
     }
 }
 
-function denormalize(value, colorModel)
+function denormalize({ channels, colorModel })
 {
     switch (colorModel) {
         case 'rgb':
-            return value.map(c => c*255)
+            return channels.map(c => c*255)
         
         case 'hsl':
-            return [ value[0]*359, value[1]*100, value[2]*100 ]
+            return [ channels[0]*359, channels[1]*100, channels[2]*100 ]
 
         case 'hsv':
-            return [ value[0]/359, value[1]/100, value[2]/100 ]
+            return [ channels[0]*359, channels[1]*100, channels[2]*100 ]
 
         default:
-            return value
+            return channels
     }
 }
 
-function convert(value, fromTo)
+function convert(color, fromTo)
 {
+    const channels = color.isNormalized ? color.channels : normalize(color)
+
     switch (fromTo) {       
         case 'hsv2hsl': {
-            return hsv2hsl(...value)
+            return {
+                channels: denormalize({ 
+                    channels: hsv2hsl(channels), 
+                    colorModel: 'hsl',
+                }),
+                colorModel: 'hsl',
+            }
+        }
+
+        case 'hsl2hsv': {
+            return {
+                channels: denormalize({ 
+                    channels: hsl2hsv(channels), 
+                    colorModel: 'hsv',
+                }),
+                colorModel: 'hsv',
+            }
         }
 
     default:
-            return value
+            return color
     }
 
 }
@@ -68,7 +119,7 @@ function format(value, colorModel)
     }
 }
 
-function hsv2hsl(h, s, v, l=v-v*s/2, m=Math.min(l,1-l))
+function hsv2hsl([ h, s, v ], l=v-v*s/2, m=Math.min(l,1-l))
 {
     return [ h, m?(v-l)/m:0, l ]
 }

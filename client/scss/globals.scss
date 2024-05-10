@@ -1,14 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 *, *:before, *:after {
     margin: 0;
     padding: 0;
     position: relative;
-    font-size: 16px;
     box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    font-optical-sizing: auto;
+    font-variation-settings:
+      "wdth" 100;
 };
 
 html {
     height: 100%;
-}
-body {
-    min-height: 100%;
 }

@@ -1,47 +1,103 @@
 import { useState } from 'react'
-import { Canvas } from 'src/ui/Canvas'
-import { Slider } from 'src/ui/Slider'
-import { drawHueSlice } from 'src/draw'
-import { OptionList } from './ui/OptionList'
+import { ColorArea } from './ui/ColorArea'
+import { color } from './color'
+import { SliderHue, SliderGradient } from './ui/Slider'
+
 
 export function App()
 {
-    const [ colorModel, setColorModel ] = useState('hsl')
+    const [ state, setState ] = useState([
+        {
+            name: 'color',
+            data: color({ channels: [ 238, 100, 50 ], colorModel: 'hsv' }),
+            Slider: SliderHue,
+            isSelected: true,
+        },
+        {
+            name: 'gradient',
+            data: [],
+            Slider: SliderGradient,
+        }
+    ])
 
-    const [ hue, setHue ] = useState(180)
+    const changeMode = e => {
+        setState(current => current.map(item => ({
+            ...item,
+            isSelected: item.name === e.target.value
+        })))
+    }
+
+    const changeColorData = (changeData) => {
+        setState(current => current.map(
+            item => item.isSelected ? { ...item, data: changeData(item.data) } : item
+        ))
+    }
 
     return (
-        <div className="picker">
+        <div className="picker f-c">
             
-            <OptionList 
-                name="colorModel" 
-                onChange={ (e) => { setColorModel(e.target.value) }} 
-                checkedValue={ colorModel }
-                items={[
-                    { label: 'HSL', value: 'hsl' },
-                    { label: 'HSV', value: 'hsv' }
-                ]}
-            />
+            <ColorArea colorData={ state.find(mode => mode.isSelected).data } />
 
-            <Slider 
-                className="slider-hue" 
-                min={ 0 } max={ 359 } step={ 1 } 
-                value={ hue } 
-                onChange={ (e) => {
-                    setHue(parseInt(e.target.value))
-                }}
-            />
+            <fieldset className="option-list f-r">
 
-            <div className="hue-slice">
+                { state.map(item => (
+                    <div key={ item.name }>
+                        <input 
+                            type="radio" 
+                            id={ 'id-' + item.name } 
+                            name={ 'mode' } 
+                            value={ item.name } 
+                            onChange={ changeMode } 
+                            defaultChecked={ item.isSelected }
+                        />
+                        <label htmlFor={ 'id-' + item.name }>
+                            { item.name }
+                        </label>
+                    </div>
+                ))}
 
-                <Canvas 
-                    params={{ 
-                        colorModel,
-                        hue: 359-hue 
-                    }}
-                    draw={ drawHueSlice } />
-                    
-            </div>
+            </fieldset>
+
+            { state.filter(mode=> mode.isSelected).map(({ Slider, name, data }) => (
+
+                <div className={ 'mode f-c' } key={ 'key-' + name }>
+                    <Slider 
+                        value={ data.getChannel(0) } 
+                        onChange={ e => { 
+                            changeColorData(color => color.change(current => ({
+                                ...current,
+                                channels: [ parseInt(e.target.value), 100, 50 ], 
+                            }))) 
+                        }}
+                    />
+
+                    <div className="color-info f-r-b">
+                        <div className="f-r">
+                            <select 
+                                className="select"
+                                name="color-model" 
+                                defaultValue={ data.colorModel }
+                                onChange={ e => { 
+                                    changeColorData(color => color.convert(data.colorModel +'2'+ e.target.value)) 
+                                }}
+                            >
+                                
+                                { [ 'hsv', 'hsl' ].map(item => (
+                                    <option key={ 'key-'+item} value={ item }>{ item }</option>
+                                )) }
+                                
+                            </select>
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+            )) }
+
+
+            {/* <div className="eyedropper"></div> */}
 
  
         </div>
