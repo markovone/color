@@ -6,18 +6,24 @@ export function drawHueSlice(ctx, params)
         hsl: hueSliceByLines,
         hsv: hueSliceByGradients
     }
+
+    // console.log('drawHueSlice')
+
+    ctx.translate(0, 300)
+    ctx.scale(1, -1)
     
     colorModels[params.colorModel](ctx, params)
 }
 
 
-function hueSliceByGradients(ctx, { hue })
+function hueSliceByGradients(ctx, params)
 {
     const { width, height } = ctx.canvas.getBoundingClientRect()
+    const hue = params.channels[0]
 
     const gradientBlack = ctx.createLinearGradient(0, 0, 0, height)
-    gradientBlack.addColorStop(0, `rgba(0,0,0,0)`)
-    gradientBlack.addColorStop(1, `rgba(0,0,0,1)`)
+    gradientBlack.addColorStop(0, `rgba(0,0,0,1)`)
+    gradientBlack.addColorStop(1, `rgba(0,0,0,0)`)
 
     const gradientWhite = ctx.createLinearGradient(0, 0, width, 0)
     gradientWhite.addColorStop(0, `rgba(255,255,255,1)`)
@@ -33,9 +39,10 @@ function hueSliceByGradients(ctx, { hue })
     ctx.fillRect(0, 0, width, height)
 }
 
-function hueSliceByLines(ctx, { hue })
+function hueSliceByLines(ctx, params)
 {
     const { width } = ctx.canvas.getBoundingClientRect()
+    const hue = params.channels[0]
     const unit = width/100
 
     for (let i = 0; i < 100; i++) {
@@ -48,7 +55,7 @@ function hueSliceByLines(ctx, { hue })
         gradient.addColorStop(1, `hsl(${stop[0]} ${stop[1]} ${stop[2]})`)
 
         ctx.fillStyle = gradient
-        ctx.fillRect(0, (100-i)*unit, width, unit)
+        ctx.fillRect(0, (i)*unit, width, unit)
     }
 }
 

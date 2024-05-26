@@ -6,7 +6,7 @@ export function SliderHue({ value, onChange, ...rest })
                 type="range"
                 min={ 0 } max={ 359 } step={ 1 } 
                 onChange={ onChange }
-                defaultValue={ value }
+                value={ value }
                 { ...rest } 
             />
         </div>

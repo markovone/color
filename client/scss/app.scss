@@ -14,6 +14,15 @@
 
     .color-area {
         width: 100%; height: 300px;
+
+        .cursor {
+            z-index: 3;
+            position: absolute;
+            width: 10px; height: 10px;
+            margin: 0 0 -5px -5px;
+            background-color: #fff;
+            border: 1px solid #000;
+        }
     }
 
 
@@ -45,33 +54,26 @@
     }
 
 
-
-    .mode {
-        gap: 10px;
+    
+    input {
+        padding: 0 10px;
+        border: none;
+        color: #fff;
+        background-color: #000;
     }
-    
-    
-    .color-info {
-        
-        input, select {
-            border: none;
-            font-size: 0.8rem;
-            color: #fff;
-            background-color: #000;
-        }
 
-
-
-    }
-    
-
-    .select {
-        padding: 0.2em 1.4em 0.2em 0.4em;       
+    select {
+        padding: 0 1.4em 0 0;
+        border: none;
+        line-height: 1em;
+        font-size: 1em;
+        color: #fff;
+        background: url("../img/icons/arrow.svg") no-repeat right 0.4em center;
+        background-color: #000;
+        background-size: 8px;
+        appearance: none;     
         -webkit-appearance: none;
         -moz-appearance: none;
-        appearance: none;
-        background: url("../img/icons/arrow.svg") no-repeat right 0.4em center;
-        background-size: 8px;
     
         option {
             color: #000;
@@ -80,46 +82,43 @@
     }
 
     .slider {
-        gap: 15px;
-    
+            
         [type="range"] {
             position: absolute;
             top: 0; left: -3%;
-            width: 106%;
-            appearance: none;
-            outline:none;
-            background: transparent;
-            height: 100%;
+            width: 106%; height: 100%;
             border:none;
             border-radius: 0px;
+            outline:none;
+            appearance: none;
+            background: transparent;
         }
         
         [type="range"]::-webkit-slider-thumb {
             appearance: none;
             display: block;
-            width: 5.5%; height: 20px;
-            margin-top: -10px;
-            background: url(
-                "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><polygon fill='black' stroke='none' points='18,4.2 9,15 0,4.2'/><polygon fill='white' stroke='none' class='st0' points='16.5,0 9,9 1.5,0' /></svg>"
-            ) no-repeat;
+            width: 15px; height: 15px;
+            margin-top: 0;
+            border: 3px solid #000;
+            background: #fff;
+            transform: rotate(45deg);
         }
     
         [type="range"]::-moz-range-thumb {
             appearance: none;
             display: block;
-            width: 5.5%; height: 30px;
-            border: none;
+            width: 10px; height: 10px;
+            margin-top: 0;
+            border: 3px solid #000;
             border-radius: 0px;
-            margin-top: 0px;
-            background-color: #fff;
-            background: url(
-                "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><polygon fill='black' stroke='none' points='18,4.2 9,15 0,4.2'/><polygon fill='white' stroke='none' class='st0' points='16.5,0 9,9 1.5,0' /></svg>"
-            ) no-repeat;
+            background: #fff;
+            transform: rotate(45deg);
         }
     }
     
     .slider-hue {
-        width: 100%; height: 20px;
+        gap: 15px;
+        width: 100%; height: 5px;
         background: linear-gradient(
             to right,
             rgb(255 0 0), 
@@ -136,5 +135,52 @@
             rgb(255 0 125),
             rgb(255 0 0)
         );
+    }
+
+    .layer {
+        font-size: 1rem;
+    }
+
+    .layer__header {
+        gap: 0.5em;
+    }
+
+    .layer__content {
+        flex: 1;
+    }
+
+    .layer__branch {
+        width: 2em;
+    }
+
+    .layer__handle {
+        width: 1em; height: 1em;
+        background-color: #fff;
+    }
+
+    .layer__body {
+        gap: 1em;
+        margin: 2em 0 3em 0;
+    }
+
+    .layer__channels {
+        width: 70%;
+
+        input {
+            box-sizing: content-box;
+            width: 45px; height: 1.2em;
+            padding: 0 10px;;
+            border-left: 0.5px solid #ffffff75;
+            text-align: center;
+
+            &:first-child {
+                border-left: 0.5px solid transparent;
+            }
+
+            &:last-child {
+                padding: 0;
+                text-align: right;
+            }
+        }
     }
 }

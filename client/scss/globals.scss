@@ -6,7 +6,7 @@
     position: relative;
     box-sizing: border-box;
     font-family: "Open Sans", sans-serif;
-    font-size: 16px;
+    font-size: inherit;
     font-optical-sizing: auto;
     font-variation-settings:
       "wdth" 100;
@@ -14,4 +14,5 @@
 
 html {
     height: 100%;
+    font-size: 16px;
 }
